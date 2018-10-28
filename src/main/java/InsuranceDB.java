@@ -29,7 +29,6 @@ public class InsuranceDB {
         }
     }
 
-
     public void selectInsuranceStatus() throws SQLException {
         String status = null;
         String selectSQL =
