@@ -40,22 +40,25 @@ public class InsuranceDB {
             preparedStatement.setString(1, "ION-5564");
             result = preparedStatement.executeQuery();
             while (result.next()) {
-                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                //if the plate doesn't exist return Secured!!!!!!!!
-                //epistrefei datediff 0 --> secured
-                int datediff = result.getInt("DateDiff");
-                if (datediff < 0) {
-                    status = "Insecured";
+                String datediffReturned = result.getString("DateDiff");
+                if (datediffReturned == null) {
+                    System.out.println("This plate doesn't exist in the database");
                 } else {
-                    status = "Secured";
+                    int datediffR = Integer.parseInt(datediffReturned);
+                    if (datediffR < 0) {
+                        status = "Insecured";
+                    } else {
+                        status = "Secured";
+                    }
+                    System.out.println("The vehicle with plate ION-5564 is " + status);
                 }
-                System.out.println("The vehicle with plate ION-5564 is " + status);
             }
         } finally {
             if (result != null) {
                 result.close();
             }
         }
+
     }
 
     public void selectInsecuredVehicle() throws SQLException {
@@ -98,7 +101,6 @@ public class InsuranceDB {
             }
         }
     }
-
 
 
 }
