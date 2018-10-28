@@ -5,6 +5,5 @@ public class InsuranceApp {
         //insuranceDB.selectInsecuredVehicle();
         insuranceDB.selectOwnerInsecuredVehicles();
         insuranceDB.CloseDBConnection();
-
     }
 }

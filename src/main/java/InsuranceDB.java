@@ -20,6 +20,7 @@ public class InsuranceDB {
         }
     }
 
+
     public InsuranceDB() {
         try {
             connection = getDBConnection();
