@@ -1,0 +1,41 @@
+
+//---------- Using Workbench you can copy and paste the following code to create and populate the database. ----------//
+
+create database insurance character set utf8mb4 collate utf8mb4_unicode_ci;
+show databases;
+use insurance;
+
+create table owner (
+owner_id int unsigned not null,
+last_name varchar(50) not null,
+first_name varchar(50) not null,
+phone varchar(50) not null,
+address varchar(50) not null,
+primary key (owner_id)
+) engine=innodb default charset=utf8mb4; 
+
+create table vehicle (
+plate char(8) not null,
+end_date date not null,
+owner_id int unsigned not null,
+primary key (plate)
+) engine=innodb default charset=utf8mb4;
+
+alter table vehicle add constraint fk_veh_own foreign key (owner_id) references owner(owner_id);
+
+insert into owner (owner_id,last_name,first_name, phone, address) values (1,'Χαραλαμπίδης','Μπάμπης','2310123456','Agias Sofias 12');
+insert into owner (owner_id,last_name,first_name, phone, address) values (2,'Τσιώλης','Δημήτρης','2310987657','Agias Sofias 13');
+insert into owner (owner_id,last_name,first_name, phone, address) values (3,'Μάλλιου','Χριστίνα','2310987658','Agias Sofias 14');
+insert into owner (owner_id,last_name,first_name, phone, address) values (4,'Τσακίρη','Κωνσταντίνα','2310123459','Agias Sofias 15');
+insert into owner (owner_id,last_name, first_name, phone, address) values (5,'Γκαγκάνης','Γεώργιος','2310123451','Agias Sofias 16');
+insert into owner (owner_id,last_name, first_name, phone, address) values (6,'Κλεάρχου','Κλέαρχος','2310123467','Agias Sofias 17');
+
+insert into vehicle (plate,end_date,owner_id) values ('ION-5564','2018-10-27',1);
+insert into vehicle (plate,end_date,owner_id) values ('NKN-1000','2018-09-19',1);
+insert into vehicle (plate,end_date,owner_id) values ('EPA-1001','2018-08-08',1);
+insert into vehicle (plate,end_date,owner_id) values ('NKA-4321','2018-10-10',2);
+insert into vehicle (plate,end_date,owner_id) values ('BOT-3810','2018-12-25',2);
+insert into vehicle (plate,end_date,owner_id) values ('NIO-8955','2018-10-15',3);
+insert into vehicle (plate,end_date,owner_id) values ('EPI-1020','2018-10-20',4);
+insert into vehicle (plate,end_date,owner_id) values ('EEK-3986','2018-10-25',5);
+insert into vehicle (plate,end_date,owner_id) values ('BOK-4356','2018-10-30',6);
