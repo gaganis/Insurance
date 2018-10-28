@@ -46,9 +46,9 @@ public class InsuranceDB {
                 } else {
                     int datediffR = Integer.parseInt(datediffReturned);
                     if (datediffR < 0) {
-                        status = "Insecured";
+                        status = "Uninsured";
                     } else {
-                        status = "Secured";
+                        status = "Insured";
                     }
                     System.out.println("The vehicle with plate ION-5564 is " + status);
                 }
@@ -61,14 +61,13 @@ public class InsuranceDB {
 
     }
 
-    public void selectInsecuredVehicle() throws SQLException {
+    public void selectUninsuredVehicle() throws SQLException {
         String selectSQL =
                 "select plate,end_date from vehicle where (select DATEDIFF(end_date, curdate())) between 0 and ?;";
         ResultSet result = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             preparedStatement.setInt(1, 60);
             result = preparedStatement.executeQuery();
-            System.out.println("Result: ");
             while (result.next()) {
                 String plate = result.getString("plate");
                 Date expirationDate = result.getDate("end_date");
@@ -81,7 +80,7 @@ public class InsuranceDB {
         }
     }
 
-    public void selectOwnerInsecuredVehicles() throws SQLException {
+    public void selectOwnerUninsuredVehicles() throws SQLException {
         String selectSQL =
                 "select plate,end_date from vehicle where owner_id=(select owner_id from vehicle where"
                         + "(plate=?)) and (select DATEDIFF(end_date, curdate()) as DateDiff)<0;";
