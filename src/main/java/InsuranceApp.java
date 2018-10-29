@@ -7,9 +7,9 @@ public class InsuranceApp {
 
         VehicleEnvironment ve = new VehicleEnvironment();
 
-        ve.showVehiclesBelongsToOwner(1);
         ve.showVehiclesList();
 
+        ve.showEndDateForVehicle("\nION-5564");
 
         insuranceDB.CloseDBConnection();
 

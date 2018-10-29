@@ -4,6 +4,10 @@ public class Functions {
 
     }
 
+    public boolean checkIfPlateFormatIsRight(){     // F1
+        return false;
+    }
+
     public void printInCsv(){
     }
 

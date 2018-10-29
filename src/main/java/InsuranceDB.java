@@ -15,7 +15,7 @@ class InsuranceDB {
 
     protected static void CloseDBConnection() throws SQLException {
         if (connection != null) {
-            connection.close(); 
+            connection.close();
         }
     }
 
@@ -27,12 +27,12 @@ class InsuranceDB {
         }
     }
 
-    protected ResultSet getPreparedStatement(String query) throws Exception {
+    protected PreparedStatement getPreparedStatement(String query) throws Exception {
         PreparedStatement preparedStatement =getDBConnection().prepareStatement(query);
-        ResultSet resultSet;
-        resultSet = preparedStatement.executeQuery(query);
+//        ResultSet resultSet;
+//        resultSet = preparedStatement.executeQuery(query);
 
-        return resultSet;
+        return preparedStatement;
     }
 
 //
