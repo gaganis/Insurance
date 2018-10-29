@@ -15,7 +15,7 @@ class InsuranceDB {
 
     protected static void CloseDBConnection() throws SQLException {
         if (connection != null) {
-            connection.close();
+            connection.close(); 
         }
     }
 

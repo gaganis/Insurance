@@ -12,10 +12,10 @@ public class Functions {
     }
 
     public void getUninsuredVehiclesInOrder(){
-        //TODO: VehicleEnvironment.getOwnersVehiclesThatAreUninsured its a list -> sort it and return it.
+        //TODO: VehicleEnvironment.getOwnersVehiclesThatAreUninsured its a list -> sort it and return it. F3 (2/2)
     }
 
     public void calcFine(){
-        //TODO: Take the number of UNINSURED vehicles of an owner -> calculate total fine.
+        //TODO: Take the number of UNINSURED vehicles of an owner -> calculate total fine. F4 (2/2)
     }
 }

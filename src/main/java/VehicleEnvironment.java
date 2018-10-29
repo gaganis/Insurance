@@ -18,7 +18,7 @@ public class VehicleEnvironment extends InsuranceDB{
         return vehicleList;
     }
 
-    public void showVehiclesList() throws Exception {
+    public void showVehiclesList() throws Exception {   // F3 (1/2)
         ArrayList<Vehicle> list = getVehiclesList();
         System.out.println("All the plates are: ");
         list.stream().map(Vehicle::getPlate).forEach(System.out::println);
@@ -50,7 +50,7 @@ public class VehicleEnvironment extends InsuranceDB{
     }
 
     public void getOwnersVehiclesThatAreUninsured(){
-        // TODO: given owner -> return a list his vehicles that are UNINSURED. F3 (1/2)
+        // TODO: given owner -> return a list his vehicles that are UNINSURED. F4 (1/2)
         // TODO: send this list to be sorted in Function.
     }
 }
