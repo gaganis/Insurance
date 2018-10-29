@@ -11,3 +11,9 @@ respond with an error message.
 F2: Vehicles' Insurance that are about to expire
 Given a time frame in days, the application should provide a list of the vehicles of whichtheir license is going to expire
 within this timeframe (what is to expire in the next X days).
+
+F3: Sorting of the plates-number The application, if requested, can provide the plate numbers order in alphanumerical order. The participants should design an algorithm to sort plates-number in ascending manner.
+
+F4: Fine calculation per owner In case that an owner may hava one or more uninsured vehicles, the application should be able to calculate the total fine cost, according to a fine which will be provided as an argument in the prompt.
+
+Note: A vehicle cannot be physically owned by more than one person.
