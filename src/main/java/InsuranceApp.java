@@ -31,9 +31,9 @@ public class InsuranceApp {
                 //} while ();
 
                 String returnedStatus = insuranceDB.selectInsuranceStatus(plate);
-                if (returnedStatus == "doesn't exist")
+                if (returnedStatus == "doesn't exist"){
                     System.out.println("This plate doesn't exist in the database");
-                else {
+                }else {
                     System.out.println("The vehicle with plate " + plate + " is " + returnedStatus);
                     ArrayList<Vehicle> OtherUninsuredVehicle;
                     OtherUninsuredVehicle = insuranceDB.selectOwnerUninsuredVehicles(plate);

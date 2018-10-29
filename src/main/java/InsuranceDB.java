@@ -6,7 +6,7 @@ public class InsuranceDB {
     private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/insurance?useUnicode=true"
             + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "admin";
+    private static final String DB_PASSWORD = "titi18x12D";
     private static Connection connection;
 
 
