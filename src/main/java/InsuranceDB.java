@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.ArrayList;
 
 public class InsuranceDB {
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -30,19 +31,19 @@ public class InsuranceDB {
     }
 
 
-    public void selectInsuranceStatus() throws SQLException {
+    public String selectInsuranceStatus(String plateToCheck) throws SQLException {
         String status = null;
         String selectSQL =
                 "select DATEDIFF((select end_date from vehicle where plate=?), curdate()) as DateDiff;";
         ResultSet result = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             // execute insert SQL stetement
-            preparedStatement.setString(1, "ION-5564");
+            preparedStatement.setString(1, plateToCheck);
             result = preparedStatement.executeQuery();
             while (result.next()) {
                 String datediffReturned = result.getString("DateDiff");
                 if (datediffReturned == null) {
-                    System.out.println("This plate doesn't exist in the database");
+                    status="doesn't exist";
                 } else {
                     int datediffR = Integer.parseInt(datediffReturned);
                     if (datediffR < 0) {
@@ -50,9 +51,9 @@ public class InsuranceDB {
                     } else {
                         status = "Insured";
                     }
-                    System.out.println("The vehicle with plate ION-5564 is " + status);
                 }
             }
+            return(status);
         } finally {
             if (result != null) {
                 result.close();
@@ -61,18 +62,16 @@ public class InsuranceDB {
 
     }
 
-    public void selectUninsuredVehicle() throws SQLException {
+    public ArrayList<Vehicle> selectUninsuredVehicle(int timeFrame) throws SQLException {
+        ArrayList<Vehicle> vehicleList = new ArrayList();
         String selectSQL =
-                "select plate,end_date from vehicle where (select DATEDIFF(end_date, curdate())) between 0 and ?;";
+                "select plate,end_date,owner_id from vehicle where (select DATEDIFF(end_date, curdate())) between 0 and ?;";
         ResultSet result = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
-            preparedStatement.setInt(1, 60);
+            preparedStatement.setInt(1, timeFrame);
             result = preparedStatement.executeQuery();
-            while (result.next()) {
-                String plate = result.getString("plate");
-                Date expirationDate = result.getDate("end_date");
-                System.out.println("The insurance for plate " + plate + " will expire " + expirationDate);
-            }
+            returnVehicle(vehicleList, result);
+            return(vehicleList);
         } finally {
             if (result != null) {
                 result.close();
@@ -80,20 +79,36 @@ public class InsuranceDB {
         }
     }
 
-    public void selectOwnerUninsuredVehicles() throws SQLException {
+    public ArrayList<Vehicle> selectOwnerUninsuredVehicles(String plateToCheck) throws SQLException {
+        ArrayList<Vehicle> vehicleList = new ArrayList();
         String selectSQL =
-                "select plate,end_date from vehicle where owner_id=(select owner_id from vehicle where"
+                "select plate,end_date,owner_id from vehicle where owner_id=(select owner_id from vehicle where"
                         + "(plate=?)) and (select DATEDIFF(end_date, curdate()) as DateDiff)<0;";
         ResultSet result = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             // execute insert SQL stetement
-            preparedStatement.setString(1, "ION-5564");
+            preparedStatement.setString(1, plateToCheck);
+            result = preparedStatement.executeQuery();
+            returnVehicle(vehicleList, result);
+            return(vehicleList);
+        } finally {
+            if (result != null) {
+                result.close();
+            }
+        }
+    }
+    public ArrayList<String> selectOrderVehicle() throws SQLException {
+        ArrayList<String> vehicleList = new ArrayList();
+        String selectSQL =
+                "select * from vehicle;";
+        ResultSet result = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(selectSQL)) {
             result = preparedStatement.executeQuery();
             while (result.next()) {
                 String plate = result.getString("plate");
-                Date expirationDate = result.getDate("end_date");
-                System.out.println("The insurance for plate " + plate + " expired in " + expirationDate);
+                vehicleList.add(plate);
             }
+            return(vehicleList);
         } finally {
             if (result != null) {
                 result.close();
@@ -102,4 +117,13 @@ public class InsuranceDB {
     }
 
 
+    private void returnVehicle(ArrayList<Vehicle> vehicleList, ResultSet result) throws SQLException {
+        while (result.next()) {
+            String plate = result.getString("plate");
+            Date expirationDate = result.getDate("end_date");
+            int ownerId = result.getInt("owner_id");
+            Vehicle vehicle=new Vehicle(plate,expirationDate,ownerId);
+            vehicleList.add(vehicle);
+        }
+    }
 }
