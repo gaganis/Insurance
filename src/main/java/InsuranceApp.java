@@ -44,6 +44,7 @@ public class InsuranceApp {
                         for (Vehicle element : OtherUninsuredVehicle) {
                             System.out.println("The insurance for plate " + element.getPlate() + " expired in " + element.getExpirationDate());
                             count++;
+
                         }
                         if (count > 0) {
                             System.out.println("Give the fine per uninsured vehicle");
