@@ -14,7 +14,7 @@ class InsConnectionDB {
     }
 
 //    TODO: make custom exception !!! in the try-catch should have a friendly message ti user.
-    
+
     protected static void CloseDBConnection() throws SQLException {
         if (connection != null) {
             connection.close();
