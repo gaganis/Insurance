@@ -1,22 +1,20 @@
-import com.ibm.icu.text.DateFormat;
-import com.ibm.icu.text.SimpleDateFormat;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class VehicleEnvironment extends InsuranceDB{
+public class VehicleEnvironment extends InsConnectionDB {
 
 
     private ArrayList<Vehicle> getVehiclesList(String query) throws Exception{
-
         ArrayList<Vehicle> vehicleList = new ArrayList<>();
+
         try {
             PreparedStatement preparedStatement = getPreparedStatement(query);
             ResultSet rs = preparedStatement.executeQuery(query);
             Vehicle vehicle;
             while (rs.next()){
-                vehicle = new Vehicle(rs.getString("plate"), rs.getString("end_date"),rs.getInt("owner_id"));
+                vehicle = new Vehicle(rs.getString("plate"), rs.getDate("end_date"),rs.getInt("owner_id"));
                 vehicleList.add(vehicle);
             }
         }catch (SQLException e){
@@ -33,82 +31,40 @@ public class VehicleEnvironment extends InsuranceDB{
     }
 
 
+    //TODO: check if the Plate exist?
+    //TODO: the calculate datediff in DB or in here?
 
-    //todo: check if the Plate exist?
-    //todo: the calculate datediff in DB or in here?
-
-    public void selectInsuranceStatus() throws Exception {
-        String status;
-        ResultSet rs = null;
-        String query = "select DATEDIFF((select end_date from vehicle where plate=?), curdate()) as DateDiff;";
-        try  {
-
-            PreparedStatement preparedStatement = getPreparedStatement(query);
-            preparedStatement.setString(1, "ION-5564");         //todo: from the user get a String
-            rs = preparedStatement.executeQuery(query);
-
-            while (rs.next()) {
-                String dateDiffReturned = rs.getString("DateDiff");
-                if (dateDiffReturned == null) {
-                    System.out.println("This plate doesn't exist in the database");
-                } else {
-                    int datediffR = Integer.parseInt(dateDiffReturned);
-                    if (datediffR < 0) {
-                        status = VEHICLETATUS.INSURED.toString();
-                    } else {
-                        status = VEHICLETATUS.UNINSURED.toString();
-                    }
-                    System.out.println("The vehicle with plate ION-5564 is " + status);
-                }
-            }
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-        }
-    }
-
-
-    private String getEndDateForVehicle(String plate) throws Exception {
+// The user provides a plate and this method responds with "when" the insurance ends (returns a date).
+    private Date getEndDateForVehicle(String plate) throws Exception {
         String query = "SELECT end_date FROM vehicle WHERE plate=?";
+        Date endDate = null;
 
-        String endDate= "";
         try {
             PreparedStatement preparedStatement = getPreparedStatement(query);
             preparedStatement.setString(1,plate);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()){
-                endDate = rs.getString("end_date");
+                endDate = rs.getDate("end_date");
             }
         }catch (SQLException e){
         }
         return endDate;
     }
 
-    public int checkDateDiff() throws ParseException {
+    public int checkDateDiff() throws ParseException {          //TODO: calculate date diff
         int dateDiff = -1;
-
-        String endDate = "2018-10-28";
-        Date oldDate = new SimpleDateFormat("yyyy-mm-dd").parse(endDate);
-
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-        Date nowDate = new Date();
-        System.out.println(dateFormat.format(nowDate));
-
-        //todo: calculate date diff
-
         return dateDiff;
     }
 
     public void showEndDateForVehicle(String plate) throws Exception {
-        if (getEndDateForVehicle(plate)==""){
+
+        if (getEndDateForVehicle(plate)==null){
             System.out.println(plate + " does not exist");
         }else {
             System.out.println(plate + " has end date " + getEndDateForVehicle(plate));
         }
     }
-
 
     public void getVehicleStatus(String plates) throws Exception {
         //TODO: given plates -> get the vehicle status (INSURED or UNINSURED). F1
