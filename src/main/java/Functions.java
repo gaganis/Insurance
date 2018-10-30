@@ -12,7 +12,7 @@ public class Functions {
     }
 
     public void chooseExportFormat(){
-        //TODO: ask the Export (Screen or CSV) file format. F2
+          //TODO: ask the Export (Screen or CSV) file format. F2
     }
 
     public void getUninsuredVehiclesInOrder(){
