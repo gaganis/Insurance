@@ -5,7 +5,7 @@ class InsConnectionDB {
     private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/insurance?useUnicode=true"
             + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "mpampis27927";
+    private static final String DB_PASSWORD = "admin";
     private static Connection connection;
 
     private static Connection getDBConnection() throws Exception {
