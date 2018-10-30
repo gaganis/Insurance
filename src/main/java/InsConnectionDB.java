@@ -13,6 +13,8 @@ class InsConnectionDB {
         return DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
     }
 
+//    TODO: make custom exception !!! in the try-catch should have a friendly message ti user.
+    
     protected static void CloseDBConnection() throws SQLException {
         if (connection != null) {
             connection.close();
