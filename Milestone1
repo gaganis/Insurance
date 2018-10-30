@@ -1,1 +1,46 @@
 https://tinyurl.com/ybubcyn3
+Suggested Milestones (M1):
+
+Initial investigation on the design of the application:
+    After understanding the requirements for this Java application, we realise, since it is not given, the need of creation of
+    a database (DB) in order to test with some examples the functionality of the application. Also, we had a question 
+    if our DB should be online or local and we decide to have it locally.
+    
+    As it is described at the F1, we notice a case for the user to provide a valid plate’s number but it does not exist in our DB. 
+    Then, we handle this with a proper message in order to have the requested functionality.In particular, for the F2 requirement,
+    regarding to find which vehicles are about to expire in days, we consider that the solution could be implemented both inside
+    the Java application and the DB. Initially, we decide to implement this through our DB, as we found a specific function which
+    is named DateDiff.
+    
+    Finally, we want to avoid asking from user additional information, for example to provide his Last name, we thought
+    that we could find it out through the plate’s number which is provided at the first requirement.
+
+
+Classes to be used:
+-InsuranceDBConnection: the class in which we have the DB_Connection for the DB we have created
+-Vehicle: includes the constructor of a vehicle
+-VehicleEnvironment: reads data for every report  from the DB’s table of vehicles, using jdbc
+-VehicleStatus: enums for the two different states of Insurance status
+-Owner: includes the constructor of a vehicle
+-OwerEnvironment: inside this class there will be the queries concerning the owner
+-Functions: implementation of functions that are related to DB, such as checkIfPlateFormatIsRight(),getUninsuredVehiclesInOrder()
+-InsuranceApp: includes the main class
+
+DB Schema:
+http://tiny.cc/6f6k0y
+
+
+User stories:
+  F1:
+-AS A [USER] I WANT TO [GIVE THE VEHICLE’S PLATES] SO THAT [I CAN BE INFORMED FOR THE INSURANCE STATUS]
+-AS A [USER] I WANT TO [PROVIDE A ‘ABC-1234’ FORMAT  FOR A VEHICLE'S PLATES] SO THAT [I CAN GIVE  A VALID RESPONSE]
+    F2: 
+-AS A [USER] I WANT TO [GIVE A TIME FRAME IN DAYS] SO THAT [I CAN LEARN WHICH VEHICLES ARE ABOUT TO EXPIRE]
+-AS A [USER] I WANT TO [CHOOSE THE EXPORT FORMAT] SO THAT [I CAN TAKE THE RESULT AT THE CONSOLE OR AS AN EXPORTED FILE]
+    F3:
+-AS A [USER] I WANT TO [HAVE A SORTING OF PLATES’ NUMBERS] SO THAT [THE PLATES COULD BE PROVIDED IN ALPHANUMERICAL ORDER]
+    F4:
+-AS A [USER] I WANT TO [PROVIDE THE FINE FOR AN UNINSURED VEHICLE] SO THAT [I CAN CALCULATE THE TOTAL FINE COST PER OWNER]
+
+
+
