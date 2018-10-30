@@ -1,11 +1,11 @@
 import java.sql.*;
 
-class InsuranceDB {
+class InsConnectionDB {
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/insurance?useUnicode=true"
             + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "admin";
+    private static final String DB_PASSWORD = "mpampis27927";
     private static Connection connection;
 
     private static Connection getDBConnection() throws Exception {
@@ -19,7 +19,7 @@ class InsuranceDB {
         }
     }
 
-    protected InsuranceDB() {
+    protected InsConnectionDB() {
         try {
             connection = getDBConnection();
         } catch (Exception e) {
