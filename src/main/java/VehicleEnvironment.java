@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.text.ParseException;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -52,9 +53,13 @@ public class VehicleEnvironment extends InsConnectionDB {
         return endDate;
     }
 
-    private int checkDateDiff() throws ParseException {          //TODO: calculate date diff. !!! F2
-        int dateDiff = -1;
 
+    public int checkDateDiff(Date input) throws ParseException {
+        int dateDiff = -1;
+        LocalDate day = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate now = LocalDate.now();
+        Period period = Period.between(now, day);
+        dateDiff = period.getDays();
         return dateDiff;
     }
 
@@ -70,6 +75,7 @@ public class VehicleEnvironment extends InsConnectionDB {
 
     public String getVehicleStatus(String plates) throws Exception {
         //TODO: given plates -> get the vehicle status (INSURED or UNINSURED). F1
+
         String status;
         int dateDiff = checkDateDiff();
         if (dateDiff>0){
