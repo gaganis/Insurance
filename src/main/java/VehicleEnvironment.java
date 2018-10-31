@@ -3,6 +3,7 @@ import java.text.ParseException;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class VehicleEnvironment extends InsConnectionDB {
 
@@ -53,13 +54,12 @@ public class VehicleEnvironment extends InsConnectionDB {
         return endDate;
     }
 
-    public int checkDateDiff(Date endDate) throws ParseException {
-        int dateDiff;
+    public long checkDateDiff(Date endDate) throws ParseException {
+        long dateDiff;
         LocalDate expirationDay = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate now = LocalDate.now();
-        Period period = Period.between(now, expirationDay);
-        dateDiff = period.getDays();
-        return dateDiff;
+        dateDiff = DAYS.between(now, expirationDay);
+        return (dateDiff);
     }
 
     public void showEndDateForVehicle(String plate) throws Exception {
