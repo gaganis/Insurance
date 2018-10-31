@@ -53,11 +53,11 @@ public class VehicleEnvironment extends InsConnectionDB {
         return endDate;
     }
 
-    public int checkDateDiff(Date input) throws ParseException {
-        int dateDiff = -1;
-        LocalDate day = input.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    public int checkDateDiff(Date endDate) throws ParseException {
+        int dateDiff;
+        LocalDate expirationDay = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         LocalDate now = LocalDate.now();
-        Period period = Period.between(now, day);
+        Period period = Period.between(now, expirationDay);
         dateDiff = period.getDays();
         return dateDiff;
     }
