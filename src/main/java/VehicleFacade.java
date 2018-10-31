@@ -1,22 +1,25 @@
 import java.sql.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
+
 import static java.time.temporal.ChronoUnit.DAYS;
 
-public class VehicleEnvironment extends InsConnectionDB {
+public class VehicleFacade extends InsConnectionDB {
 
 
     private ArrayList<Vehicle> getVehiclesList(String query) throws Exception{
         ArrayList<Vehicle> vehicleList = new ArrayList<>();
 
         try {
-            PreparedStatement preparedStatement = getPreparedStatement(query);
+            PreparedStatement preparedStatement =getDBConnection().prepareStatement(query);
             ResultSet rs = preparedStatement.executeQuery(query);
             Vehicle vehicle;
             while (rs.next()){
-                vehicle = new Vehicle(rs.getString("plate"), rs.getDate("end_date"),rs.getInt("owner_id"));
+                vehicle = new Vehicle(rs.getString("plate"),
+                        rs.getString("end_date"),rs.getInt("owner_id"));
                 vehicleList.add(vehicle);
             }
         }catch (SQLException e){
@@ -34,24 +37,27 @@ public class VehicleEnvironment extends InsConnectionDB {
 
 
     //TODO: check if the Plate exist?
-    //TODO: the calculate datediff in DB or in here?
 
-// The user provides a plate and this method responds with "when" the insurance ends (returns a date).
-    private Date getEndDateForVehicle(String plate) throws Exception {
+
+    public Date getEndDateForVehicle(String plate) throws Exception {
         String query = "SELECT end_date FROM vehicle WHERE plate=?";
-        Date endDate = null;
+        String endDate = null;
 
         try {
-            PreparedStatement preparedStatement = getPreparedStatement(query);
+            PreparedStatement preparedStatement = getDBConnection().prepareStatement(query);
             preparedStatement.setString(1,plate);
             ResultSet rs = preparedStatement.executeQuery();
 
             while (rs.next()){
-                endDate = rs.getDate("end_date");
+                endDate = rs.getString("end_date");
             }
         }catch (SQLException e){
         }
-        return endDate;
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date day = dateFormat.parse(endDate);
+
+        return day;
     }
 
     public long checkDateDiff(Date endDate) throws ParseException {
@@ -62,6 +68,19 @@ public class VehicleEnvironment extends InsConnectionDB {
         return (dateDiff);
     }
 
+    public Enum getVehicleStatus(String plate) throws Exception {
+        Enum status;
+        long dateDiff = checkDateDiff(getEndDateForVehicle(plate));
+
+        System.out.println("dateDiff = " + dateDiff);
+        if (dateDiff<=0.0){
+            status = VehicleStatus.UNINSURED;
+        }else{
+            status = VehicleStatus.INSURED;
+        }
+        return status;
+    }
+
 
     public void showEndDateForVehicle(String plate) throws Exception {
 
@@ -70,19 +89,6 @@ public class VehicleEnvironment extends InsConnectionDB {
         }else {
             System.out.println(plate + " has end date " + getEndDateForVehicle(plate));
         }
-    }
-
-    public String getVehicleStatus(String plates) throws Exception {
-        //TODO: given plates -> get the vehicle status (INSURED or UNINSURED). F1
-
-        String status;
-        int dateDiff = checkDateDiff();
-        if (dateDiff>0){
-            status = VEHICLESTATUS.INSURED.toString();
-        }else{
-            status = VEHICLESTATUS.UNINSURED.toString();
-        }
-        return status;
     }
 
     private void  getVehiclesThatWillBeExpiredIn(String dateDiff){
