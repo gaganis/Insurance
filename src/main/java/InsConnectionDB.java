@@ -5,13 +5,15 @@ class InsConnectionDB {
     private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/insurance?useUnicode=true"
             + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "mpampis27927";
+    private static final String DB_PASSWORD = "admin";
     private static Connection connection;
 
     private static Connection getDBConnection() throws Exception {
         Class.forName(DB_DRIVER);
         return DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
     }
+
+//    TODO: make custom exception !!! in the try-catch should have a friendly message ti user.
 
     protected static void CloseDBConnection() throws SQLException {
         if (connection != null) {
