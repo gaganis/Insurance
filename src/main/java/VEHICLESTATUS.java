@@ -1,4 +1,4 @@
-public enum VEHICLETATUS {
+public enum VEHICLESTATUS {
     INSURED,
     UNINSURED;
 }
