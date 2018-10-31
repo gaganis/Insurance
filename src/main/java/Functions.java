@@ -1,7 +1,14 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Functions {
 
-    public void readFromTheKeyboard(){
-
+    public String readFromTheKeyboard() throws IOException {
+        InputStreamReader reader = new InputStreamReader(System.in);
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String userInput=bufferedReader.readLine();
+        return(userInput);
     }
 
     public boolean checkIfPlateFormatIsRight(){     // F1
