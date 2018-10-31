@@ -1,7 +1,9 @@
 import java.sql.*;
 import java.text.ParseException;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class VehicleEnvironment extends InsConnectionDB {
 
@@ -52,30 +54,43 @@ public class VehicleEnvironment extends InsConnectionDB {
         return endDate;
     }
 
-    public int checkDateDiff() throws ParseException {          //TODO: calculate date diff
-        int dateDiff = -1;
-        return dateDiff;
+    public long checkDateDiff(Date endDate) throws ParseException {
+        long dateDiff;
+        LocalDate expirationDay = endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate now = LocalDate.now();
+        dateDiff = DAYS.between(now, expirationDay);
+        return (dateDiff);
     }
+
 
     public void showEndDateForVehicle(String plate) throws Exception {
 
         if (getEndDateForVehicle(plate)==null){
-            System.out.println(plate + " does not exist");
+            System.out.println(plate + " does not exist");      //TODO: check the out to be err !!!
         }else {
             System.out.println(plate + " has end date " + getEndDateForVehicle(plate));
         }
     }
 
-    public void getVehicleStatus(String plates) throws Exception {
+    public String getVehicleStatus(String plates) throws Exception {
         //TODO: given plates -> get the vehicle status (INSURED or UNINSURED). F1
+
+        String status;
+        int dateDiff = checkDateDiff();
+        if (dateDiff>0){
+            status = VEHICLESTATUS.INSURED.toString();
+        }else{
+            status = VEHICLESTATUS.UNINSURED.toString();
+        }
+        return status;
     }
 
-    public void  getVehiclesThatWillBeExpiredIn(String dateDiff){
+    private void  getVehiclesThatWillBeExpiredIn(String dateDiff){
         // TODO: given days -> get a list of the vehicles that will be expired in givenDays. F2
         // TODO: selectable export format.
     }
 
-    public void getOwnersVehiclesThatAreUninsured(){
+    private void getOwnersVehiclesThatAreUninsured(){
         // TODO: given owner -> return a list his vehicles that are UNINSURED. F4 (1/2)
         // TODO: send this list to be sorted in Function.
     }
