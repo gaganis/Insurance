@@ -1,6 +1,6 @@
 import java.sql.*;
 
-class InsConnectionDB {
+class ConnectionDB {
     private static final String DB_DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/insurance?useUnicode=true"
             + "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
@@ -19,7 +19,7 @@ class InsConnectionDB {
         }
     }
 
-    public InsConnectionDB() {
+    public ConnectionDB() {
         try {
             connection = getDBConnection();
         } catch (Exception e) {

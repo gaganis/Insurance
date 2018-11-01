@@ -1,3 +1,3 @@
-public class OwnerFacade extends InsConnectionDB {
+public class OwnerFacade extends ConnectionDB {
 
 }

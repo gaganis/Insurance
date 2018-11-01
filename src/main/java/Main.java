@@ -1,20 +1,26 @@
-import java.util.Date;
-
 public class Main {
     public static void main(String[] args) throws Exception {
         VehicleFacade ve = new VehicleFacade();
 
-        ve.showVehiclesList();
+        Menu menu = new Menu();
+        menu.choices();
 
-        ve.showEndDateForVehicle("ION-5564");
+//        vehicleState.getVehicleStatus("ION-5564");
+//
+//
+//        VehicleSorting vehicleSorting = new VehicleSorting();
+//        vehicleSorting.getUninsuredVehiclesInOrder(ve.getVehiclesList());
+//
+//        ArrayList<Vehicle> orderedVe = vehicleSorting.getUninsuredVehiclesInOrder(ve.getVehiclesList());
+//        for (Vehicle veh : orderedVe) {
+//            System.out.println(veh.getPlate());
+//        }
 
-        Date endDate = ve.getEndDateForVehicle("ION-5564");
 
-        System.out.println("days are: " + ve.checkDateDiff(endDate));
 
-        ve.getVehicleStatus("ION-5564");
 
-        System.out.println(ve.getVehicleStatus("ION-5564"));
+        ve.CloseDBConnection();
 
     }
+
 }
