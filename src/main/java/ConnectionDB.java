@@ -13,9 +13,13 @@ class ConnectionDB {
         return DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
     }
 
-    public static void CloseDBConnection() throws SQLException {
+    public static void CloseDBConnection(){
         if (connection != null) {
-            connection.close();
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -26,4 +30,13 @@ class ConnectionDB {
             e.printStackTrace();
         }
     }
+
+
+//    TODO: Exceptions
+//    TODO: Packages
+//    TODO: Doesnt exists plate & owner name
+//    TODO: Sort Lambdas
+//    TODO: join F4
+
+
 }
