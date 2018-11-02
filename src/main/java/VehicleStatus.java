@@ -1,4 +1,4 @@
-public enum vehicleStatus {
+public enum VehicleStatus {
     INSURED,
     UNINSURED;
 }
